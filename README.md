@@ -3,6 +3,9 @@ ASynchronous Interface Mimicking an Operating System
 
 A node based systems interface
 
+##Run
+`node /bin/asismos`
+
 
 ## Contribution and License Agreement
 
