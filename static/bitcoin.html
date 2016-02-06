@@ -1,0 +1,337 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+    	<li><a href="#" id="listaddlink">List Addresses</a></li>
+    	<li><a href="#" id="newaddlink" data-toggle="modal" data-target="#newAdd">New Address</a></li>
+    	<li><a href="#" id="sigmsglink" data-toggle="modal" data-target="#signMessage">Sign Message</a></li>
+    	<li><a href="#" id="vmsglink" data-toggle="modal" data-target="#verifyMessage">Verify Message</a></li> 
+    	<li><a href="#" id="dumpprivkeylink" data-toggle="modal" data-target="#dumpprivkey">Dump Private Key</a></li>
+	</ul>
+  </div>
+</nav>
+<div id="bStats" class="col-sm-12 col-md-3">
+<h4>Bitcoin Stats</h4>
+<ul id="instats" style="list-style-type:none;">
+	<li id="bupPeersli" style="cursor: pointer;"><em>Peers: </em><br />&nbsp;&nbsp;<span id="bupPeers"></span></li><!-- "connections" from bitcoin-cli getinfo -->
+	<li><em>Uptime: </em><br />&nbsp;&nbsp;<span id="bupDisp"></span></li><!--  ps -p $(pidof bitcoind) -o time --no-headers  // get up time for bitcoin daemon process -->
+	<li><small><em>Block Count: </em></small><br />&nbsp;&nbsp;<span id="bupBlkCnt"></span></li><!--  "blocks" from bitcoin-cli getinfo -->
+	<li><small><em>Blocks Behind: </em></small><br />&nbsp;&nbsp;<span id="bupBlkBehind"></span></li><!-- "totals['block_count']" from https://api.smartbit.com.au/v1/blockchain/totals minus "blocks" from bitcoin-cli getinfo  -->	
+	<li><em>Protocol Version: </em><br />&nbsp;&nbsp;<span id="bupPver"></span></li><!-- "protocolversion" from bitcoin-cli getinfo -->
+	<li><small><em>Difficulty: </em></small><br />&nbsp;&nbsp;<span id="bupDif"></span></li><!-- "difficulty" from bitcoin-cli getinfo -->
+
+</ul>
+<hr />
+<ul id="exstats" style="list-style-type:none;">	
+	<li><small><em>Node External IP: </em></small><br />&nbsp;&nbsp;<span id="extIPDisp"></span>:8333</li><!-- https://api.ipify.org/?format=json (add ":8333" to ip for adding node)-->
+	<li><small><em>24 Hour Transaction Count: </em></small><br />&nbsp;&nbsp;<span id="24hrDisp"></span></li><!-- "stats['transaction_count']" from https://api.smartbit.com.au/v1/blockchain/stats -->
+	<li><small><em>Average Minutes Per Block</em></small><br />&nbsp;&nbsp;<span id="avgBlkDisp"></span></li><!-- "stats['block_interval_min']" from https://api.smartbit.com.au/v1/blockchain/stats -->
+	<li><small><em>Hash Rate: </em></small><br />&nbsp;&nbsp;<span id="hashDisp"></span>&nbsp;GH/s</li>
+	<li><small><em>Current BTC|USD Price <a href="//theindex.io/" title="Price provided by theindex.io" target="_blank">&nbsp;<i class="fa fa-external-link"></i></a></em></small><br />&nbsp;&nbsp;$&nbsp;<span id="indxPDisp"></span></li>
+</ul>
+</div>
+<div id="bInterface" class="col-sm-12 col-md-9">
+<a href="https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list#Full_list" target="_blank">&nbsp;<i class="fa fa-external-link"></i>List of Bitcoin Commands</a>
+<br />
+To run any command, open a terminal and type bitcoin-cli help
+</div>
+<div id="signMessage" class="modal fade" role="dialog">
+  <div class="modal-admin">
+    <div class="modal-content">
+      <div class="modal-header" style="background: slategray">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Sign Message</h4>
+      </div>
+      <div class="modal-body" style="background: #333;">
+      	<form class="form-horizontal" id="signMsgForm">
+		<fieldset>
+		<div class="form-group">
+		  <label class="col-md-12 control-label" for="selectaddress">Address</label>
+		  <div class="col-md-12">
+		    <select id="selectaddress" name="selectaddress" class="form-control">
+		    </select>
+		  </div>
+		</div>
+		<div class="form-group">
+		  <label class="col-md-12 control-label" for="message">Message</label>  
+		  <div class="col-md-12">
+		  <input id="message" name="message" type="text" placeholder="Message to Sign" class="form-control input-md">
+		  </div>
+		  </div>
+		<button style="float:right;" id="signSubmit" name="signSubmit" class="btn btn-success">Submit</button>
+      	<button type="button" style="float:left;" class="btn btn-default" data-dismiss="modal">Close</button>
+		</fieldset>
+		</form>
+      </div>
+      <div class="modal-footer" id="messageOutput" style="color:#666;">
+       <em>Signature will appear hear</em>        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="newAdd" class="modal fade" role="dialog">
+  <div class="modal-admin">
+    <div class="modal-content">
+      <div class="modal-header" style="background: slategray">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">New Address</h4>
+      </div>
+      <div class="modal-body" style="background: #333;">
+      	<form class="form-horizontal" id="newAddForm">
+		<fieldset>
+		<div class="form-group">
+		  <label class="col-md-12 control-label" for="message">Account (Optional)</label>  
+		  <div class="col-md-12">
+		  <input id="account" name="account" type="text" placeholder="Account Name" class="form-control input-md">
+		  </div>
+		  </div>
+		<button style="float:right;" id="naddSubmit" name="naddSubmit" class="btn btn-success">Submit</button>
+      	<button type="button" style="float:left;" class="btn btn-default" data-dismiss="modal">Close</button>
+		</fieldset>
+		</form>
+      </div>
+      <div class="modal-footer" id="namessageOutput" style="color:#666;">
+       <em>Address will appear hear</em>        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="verifyMessage" class="modal fade" role="dialog">
+  <div class="modal-admin">
+    <div class="modal-content">
+      <div class="modal-header" style="background: slategray">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Verify Message</h4>
+      </div>
+      <div class="modal-body" style="background: #333;">
+      	<form class="form-horizontal" id="vMsgForm">
+		<fieldset>
+		<div class="form-group">
+		  <label class="col-md-12 control-label" for="textinput">Bitcoin Address</label>  
+		  <div class="col-md-12">
+		  <input id="vaddress" name="vaddress" type="text" placeholder="bitcoin address" class="form-control input-md"> 
+		  </div>
+		</div>
+		
+		<!-- Text input-->
+		<div class="form-group">
+		  <label class="col-md-12 control-label" for="textinput">Signature</label>  
+		  <div class="col-md-12">
+		  <input id="vsignature" name="vsignature" type="text" placeholder="signature" class="form-control input-md">
+		  </div>
+		</div>
+		
+		<!-- Text input-->
+		<div class="form-group">
+		  <label class="col-md-12 control-label" for="textinput">Message</label>  
+		  <div class="col-md-12">
+		  <input id="vmessage" name="vmessage" type="text" placeholder="message" class="form-control input-md">
+		  </div>
+		</div>
+		
+		<button style="float:right;" id="vMsgSubmit" name="vMsgSubmit" class="btn btn-success">Verify</button>
+      	<button type="button" style="float:left;" class="btn btn-default" data-dismiss="modal">Close</button>
+		</fieldset>
+		</form>
+      </div>
+      <div class="modal-footer" id="vmessageOutput" style="color:#666;">
+       <em>Response will appear here</em>        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="dumpprivkey" class="modal fade" role="dialog">
+  <div class="modal-admin">
+    <div class="modal-content">
+      <div class="modal-header" style="background: slategray">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Dump Private Key</h4>
+      </div>
+      <div class="modal-body" style="background: #333;">
+      <p id="warning" class="alert-danger" style="padding: 25px;">
+      	THIS IS NOT SECURE. If you choose to use this method to obtain your private key, you understand that it is potentially compromised.
+      </p>
+      	<form class="form-horizontal" id="dumpform">
+		<fieldset>
+		<div class="form-group">
+		  <label class="col-md-12 control-label" for="dumpaddress">Address</label>
+		  <div class="col-md-12">
+		    <select id="dumpaddress" name="dumpaddress" class="form-control">
+		    </select>
+		  </div>
+		</div>
+		
+		<button style="float:right;" id="dumpSubmit" name="dumpSubmit" class="btn btn-danger">Dump Private Key</button>
+      	<button type="button" style="float:left;" class="btn btn-default" data-dismiss="modal">Close</button>
+		</fieldset>
+		</form>
+      </div>
+      <div class="modal-footer" id="dmessageOutput" style="color:#666;">
+       <em>Signature will appear hear</em>        
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	var addList = {};
+	$('#refreshLogo').addClass('fa-spin');
+	$('#sigmsglink').prop('disabled', true);
+	$('#sigmsglink').text('loading');
+	$('#listaddlink').prop('disabled', true);
+	$('#listaddlink').text('loading');
+		function btcUpdate(){
+			var blkBehind = 0;
+			var blks = 0;
+			var currentblk = 0;
+			
+			$.getJSON('/api/buptime',function(data){
+				$('#bupDisp').html(data);
+			});
+			
+			$.getJSON('/api/getinfo',function(data){
+				$('#bupDif').html(data['difficulty']);
+				blks = data['blocks'];
+				$('#bupPeers').html(data['connections']);
+				$('#bupPver').html(data['protocolversion']);
+				$('#bupBlkCnt').html(blks);
+				
+				$.getJSON('https://api.smartbit.com.au/v1/blockchain/totals',function(data){
+					currentblk = data['totals']['block_count'];
+					blkBehind = currentblk - blks;
+					$('#bupBlkBehind').html(blkBehind);
+					$('#refreshLogo').removeClass('fa-spin');
+				});
+				
+			});
+			
+			$.getJSON('https://api.ipify.org/?format=json',function(data){
+				$('#extIPDisp').html(data['ip']);
+			});
+			$.getJSON('http://theindex.io/api/',function(data){
+				$('#indxPDisp').html(data['btc_usd']);
+			});
+			$.getJSON('https://api.smartbit.com.au/v1/blockchain/stats',function(data){
+				$('#24hrDisp').html(data['stats']['transaction_count']);
+				$('#avgBlkDisp').html(data['stats']['block_interval_min']);
+				$('#hashDisp').html(data['stats']['hash_rate_gh']);
+				
+			});
+			
+			$('em').css('color','#666');
+			$.getJSON('/api/getadds',function(data){
+				var i = 0;
+				$.each(data,function(k,v){
+					var disp ='';
+					if(v['account'] != ''){
+						disp += v['account']+' | ';
+					}
+					disp += v['address'];
+					$('#selectaddress').append('<option value="'+v['address']+'">'+disp+'</option>');
+					$('#dumpaddress').append('<option value="'+v['address']+'">'+disp+'</option>');
+					addList[i] = {address: v['address'],account: v['account']};
+					i++;
+				});
+				$('#sigmsglink').prop('disabled', false);
+				$('#sigmsglink').text('Sign Message');
+				$('#listaddlink').prop('disabled', false);
+				$('#listaddlink').text('List Addresses');
+			});
+			
+			
+		}
+		
+		$('#listaddlink').click(function(e){
+			e.preventDefault();
+			var output = '';
+			$.each(addList,function(id,data){
+				output += '<p>';
+				output += 'Address: '+data['address'];
+				if(data['account'] != ''){
+					output += ' | Account: '+data['account'];
+				}
+				output +='</p>';
+			});
+			$('#bInterface').html(output);
+		});
+		$('#bupPeersli').click(function(e){
+			e.preventDefault();
+			$('#refreshLogo').addClass('fa-spin');
+			$.getJSON('/api/getpeerinfo',function(data){
+				var htmlData;
+				var peerList = {};
+				/* $.each(data,function(k,v){
+					
+					$.each(v,function(key,value){
+						peerList[k][key] = value; 
+					});
+				}); */
+				$('#bInterface').html(data);
+				$('#refreshLogo').removeClass('fa-spin');
+			});
+		});
+		
+		$('#newAddForm').submit(function(e){
+			e.preventDefault();
+			
+			var acct = $('#account').val();
+			$('#account').val('Generating New Address, Please Wait')
+			$('#naddSubmit').html('<i class="fa fa-refresh fa-spin"></i>');
+			$.post('/api/newadd',{acct: acct},function(data){
+					$('#namessageOutput').html(data.add);
+					$('#account').val(acct);
+					$('#naddSubmit').html('Submit');
+			})
+		});
+		
+		$('#signMsgForm').submit(function(e){
+			e.preventDefault();
+			
+			var add = $('#selectaddress').val();
+			var msg = $('#message').val();
+			$('#message').val('Signing Message')
+			$('#signSubmit').html('<i class="fa fa-refresh fa-spin"></i>');
+			$.post('/api/signmessage',{add: add, msg:msg},function(data){
+				
+				if(data.add == add && data.msg == msg){
+					$('#messageOutput').html(data.sig);
+					$('#message').val(msg);
+					$('#signSubmit').html('Submit');
+				}else{
+					$('#messageOutput').html('whoops, sign message fail');
+				}
+			})
+		});
+		
+		$('#vMsgForm').submit(function(e){
+			e.preventDefault();
+			var add = $('#vaddress').val();
+			var sig = $('#vsignature').val();
+			var msg = $('#vmessage').val();
+			$('#vmessage').val('Verifying Message, Please Wait')
+			$('#vMsgSubmit').html('<i class="fa fa-refresh fa-spin"></i>');
+			$.post('/api/verifymessage',{add: add, sig: sig, msg: msg},function(data){
+				$('#vmessageOutput').html(data);
+				$('#vmessage').val(msg);
+				$('#vMsgSubmit').html('Verify');
+			})
+		});
+		
+		$('#dumpform').submit(function(e){
+			e.preventDefault();
+			var add = $('#dumpaddress').val();
+			$('#dmessageOutput').html('Dumping Key, Please Wait');
+			$('#dumpSubmit').html('<i class="fa fa-refresh fa-spin"></i>');
+			$.post('/api/dumpkey',{add: add},function(data){
+					$('#dmessageOutput').html(data);
+					$('#dumpSubmit').html('Dump Private Key');
+
+			})
+		});
+		
+		btcUpdate();
+	});
+</script>

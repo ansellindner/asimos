@@ -1,0 +1,86 @@
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li><a href="#" id="sys1">Check Memory</a></li>
+      <li><a href="#" id="sys2">Check Storage</a></li>
+      <li><a href="#" id="sys3">Update System</a></li> 
+      <li><a href="#" id="sys4">Update ASIMOS</a></li> 
+      <li><a href="#" id="sys5">Reboot Device</a></li> 
+      <li><a href="#" id="sys6">Shutdown Device</a></li> 
+	</ul>
+  </div>
+</nav>
+<div class="col-sm-12 col-md-2">
+
+</div>
+<div class="col-sm-12 col-md-10">
+	To run any command, click on terminal<hr />
+	<div id="memdiv" class="col-sm-12 sysinst">
+	<h4>How to Check Your Memory</h4>
+		<pre>cat /proc/meminfo</pre>
+	</div>
+	<div id="strdiv" class="col-sm-12 sysinst">
+	<h4>How to Check Your Storage</h4>
+	To Find your drives
+	<pre>lsblk</pre>
+	To see disk usage
+	<pre>df -h /dev/sda1</pre>
+	</div>
+	<div id="upsdiv" class="col-sm-12 sysinst">
+	<h4>How to Update Your System</h4>
+	This assumes you are running ARCH Linux
+	<pre>sudo pacman -Syu --noconfirm</pre>
+	</div>
+	<div id="upadiv" class="col-sm-12 sysinst">
+	<h4>How To Update ASIMOS</h4>
+	<p>This changes to the default directory location, pulls the latest version and then installs any new node dependancies</p>
+	<pre>cd ~/asimos/ && git pull && npm install</pre>
+	</div>
+	<div id="rbdiv" class="col-sm-12 sysinst">
+	<h4>How to Reboot Your Device</h4>
+	<p>This assumes you have bitcoin running and don't want to corrupt your database</p>
+	<pre>bitcoin-cli stop && sudo reboot</pre>
+	</div>
+	<div id="sddiv" class="col-sm-12 sysinst">
+	<h4>How to Shutdown Your Device</h4>
+	<p>This assumes you have bitcoin running and don't want to corrupt your database</p>
+	<pre>bitcoin-cli stop && sudo shutdown -t now 0</pre>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.sysinst').hide();
+		$('#sys1').click(function(e){
+			e.preventDefault();
+			$('.sysinst:visible').slideUp('slow');
+			$('#memdiv').slideDown('slow');
+		});
+		$('#sys2').click(function(e){
+			e.preventDefault();
+			$('.sysinst:visible').slideUp('slow');
+			$('#strdiv').slideDown('slow');
+		});
+		$('#sys3').click(function(e){
+			e.preventDefault();
+			$('.sysinst:visible').slideUp('slow');
+			$('#upsdiv').slideDown('slow');
+		});
+		$('#sys4').click(function(e){
+			e.preventDefault();
+			$('.sysinst:visible').slideUp('slow');
+			$('#upadiv').slideDown('slow');
+		});
+		$('#sys5').click(function(e){
+			e.preventDefault();
+			$('.sysinst:visible').slideUp('slow');
+			$('#rbdiv').slideDown('slow');
+		});
+		$('#sys6').click(function(e){
+			e.preventDefault();
+			$('.sysinst:visible').slideUp('slow');
+			$('#sddiv').slideDown('slow');
+		});
+	});
+</script>

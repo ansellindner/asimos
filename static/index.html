@@ -1,0 +1,67 @@
+<!doctype html>
+<title>ASIMOS</title>
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha256-3dkvEK0WLHRJ7/Csr0BZjAWxERc5WH7bdeUya2aXxdU= sha512-+L4yy6FRcDGbXJ9mPG8MT/3UCDzwR9gPeyFNMCtInsol++5m3bk2bXWKdZjvybmohrAsn3Ua5x8gfLnbE1YkOg==" crossorigin="anonymous">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==" crossorigin="anonymous">
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="user.css">
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">ASIM<i id="refreshLogo" class="fa fa-refresh"></i>S</a>
+    </div>
+    <ul class="nav navbar-nav">
+      
+      <li><a href="#" id="sysstats">System</a></li>
+      
+      <li><a href="#" id="btcstats"><i class="fa fa-bitcoin"></i>itcoin</a></li>
+       
+	</ul>
+	<ul class="nav navbar-nav navbar-right">
+      <li><a href="#" id="open">Terminal</a></li> 
+      <li><a href="#" id="termHelp" data-toggle="modal" data-target="#help">Help</a>
+    </ul>
+  </div>
+</nav>
+
+<div id="mainBody">
+	
+
+</div>
+
+
+<div id="help" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="background: slategray">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Help</h4>
+      </div>
+      <div class="modal-body" style="background: #333;">
+      	<h5><strong>Terminal</strong></h5>
+		<p>Click the titlebar to drag.</p>
+		<p>Double-click titlebar to maximize.</p>
+		<p>Click the lower-right corner to resize.</p>
+		<p>Click the tilde to open a new tab.</p>
+		<p>Click the tilde with a modifier (alt,shift,ctrl) to close the window.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<script src="//code.jquery.com/jquery-1.12.0.min.js" ></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
+<script src="socket.io/socket.io.js"></script>
+<script src="term.js"></script>
+<script src="options.js"></script>
+<script src="tty.js"></script>
+<script src="user.js"></script>

@@ -1,0 +1,40 @@
+{
+  "name": "asimos",
+  "description": "A node based system interface",
+  "author": "Steve Johnson",
+  "version": "0.2.15",
+  "license": "MIT",
+  "main": "./index.js",
+  "bin": "./bin/asimos.js",
+  "preferGlobal": false,
+  "repository": "git://**git",
+  "homepage": "**",
+  "bugs": {
+    "url": "**"
+  },
+  "keywords": [
+    "asimos",
+    "terminal",
+    "bitcoin",
+    "node",
+    "ui"
+  ],
+  "tags": [
+    "asimos",
+    "terminal",
+    "bitcoin",
+    "node",
+    "ui"
+  ],
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": ">=4",
+    "pty.js": ">= 0.2.13",
+    "serve-favicon": "^2.3.0",
+    "socket.io": "0.9.16",
+    "term.js": ">= 0.0.5"
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  }
+}
